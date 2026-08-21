@@ -50,6 +50,11 @@ function startVisualization() {
 
   init()
   animate()
+
+  transform(
+    tableTargets,
+    2000
+  )
 }
 
 function init() {
