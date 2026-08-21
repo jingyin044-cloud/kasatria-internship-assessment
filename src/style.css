@@ -1,0 +1,143 @@
+body {
+  margin: 0;
+  overflow: hidden;
+
+  background:
+    radial-gradient(
+      circle,
+      #172033,
+      #02040a
+    );
+
+  font-family:
+    Arial,
+    sans-serif;
+}
+
+.person-card {
+  width: 220px;
+  height: 280px;
+
+  padding: 20px;
+
+  box-sizing: border-box;
+
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.6);
+
+  border-radius: 10px;
+
+  color: white;
+
+  text-align: center;
+
+  box-shadow:
+    0 0 20px
+    rgba(255, 255, 255, 0.2);
+}
+
+.wealth-red {
+  background:
+    rgba(180, 40, 40, 0.85);
+}
+
+.wealth-orange {
+  background:
+    rgba(220, 130, 30, 0.85);
+}
+
+.wealth-green {
+  background:
+    rgba(30, 160, 90, 0.85);
+}
+
+.person-photo {
+  width: 90px;
+  height: 90px;
+
+  object-fit: cover;
+
+  border-radius: 50%;
+
+  margin-bottom: 12px;
+}
+
+.name {
+  margin-bottom: 12px;
+
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.person-card div {
+  margin-top: 8px;
+}
+
+#menu {
+  position: fixed;
+
+  left: 0;
+  bottom: 30px;
+
+  width: 100%;
+
+  text-align: center;
+
+  z-index: 1000;
+
+  pointer-events: none;
+}
+
+#menu button {
+  padding: 12px 28px;
+
+  color: white;
+
+  background:
+    rgba(0, 0, 0, 0.6);
+
+  border:
+    1px solid white;
+
+  border-radius: 5px;
+
+  font-size: 16px;
+
+  cursor: pointer;
+
+  pointer-events: auto;
+}
+
+#menu button:hover {
+  background:
+    rgba(255, 255, 255, 0.2);
+}
+
+
+#login-screen {
+  position: fixed;
+  inset: 0;
+
+  display: flex;
+  flex-direction: column;
+
+  justify-content: center;
+  align-items: center;
+
+  gap: 20px;
+
+  background: #02040a;
+
+  color: white;
+
+  z-index: 9999;
+}
+
+#login-button {
+  padding: 14px 28px;
+
+  font-size: 18px;
+
+  cursor: pointer;
+}
