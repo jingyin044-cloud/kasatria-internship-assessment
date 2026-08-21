@@ -14,28 +14,29 @@ body {
     sans-serif;
 }
 
+
+/* =========================
+   PERSON CARDS
+========================= */
+
 .person-card {
-  width: 220px;
-  height: 280px;
+  width: 140px;
+  height: 190px;
 
-  padding: 20px;
-
+  padding: 10px;
   box-sizing: border-box;
 
-  border:
-    1px solid
-    rgba(255, 255, 255, 0.6);
-
-  border-radius: 10px;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  border-radius: 5px;
 
   color: white;
-
   text-align: center;
 
-  box-shadow:
-    0 0 20px
-    rgba(255, 255, 255, 0.2);
+  font-size: 12px;
 }
+
+
+/* Net worth colors */
 
 .wealth-red {
   background:
@@ -52,6 +53,9 @@ body {
     rgba(30, 160, 90, 0.85);
 }
 
+
+/* Person photo */
+
 .person-photo {
   width: 90px;
   height: 90px;
@@ -63,6 +67,9 @@ body {
   margin-bottom: 12px;
 }
 
+
+/* Person name */
+
 .name {
   margin-bottom: 12px;
 
@@ -73,6 +80,11 @@ body {
 .person-card div {
   margin-top: 8px;
 }
+
+
+/* =========================
+   LAYOUT BUTTON MENU
+========================= */
 
 #menu {
   position: fixed;
@@ -92,10 +104,12 @@ body {
 #menu button {
   padding: 12px 28px;
 
+  margin: 0 3px;
+
   color: white;
 
   background:
-    rgba(0, 0, 0, 0.6);
+    rgba(0, 0, 0, 0.65);
 
   border:
     1px solid white;
@@ -107,37 +121,190 @@ body {
   cursor: pointer;
 
   pointer-events: auto;
+
+  transition:
+    background 0.2s,
+    transform 0.2s;
 }
 
 #menu button:hover {
   background:
     rgba(255, 255, 255, 0.2);
+
+  transform: translateY(-2px);
 }
 
 
+/* =========================
+   LOGIN PAGE
+========================= */
+
 #login-screen {
   position: fixed;
+
   inset: 0;
 
   display: flex;
-  flex-direction: column;
 
   justify-content: center;
   align-items: center;
 
-  gap: 20px;
-
-  background: #02040a;
-
-  color: white;
+  background:
+    #f5f5f5;
 
   z-index: 9999;
 }
 
+
+/* Login white card */
+
+.login-card {
+  width: 360px;
+
+  padding: 45px 40px;
+
+  box-sizing: border-box;
+
+  text-align: center;
+
+  background:
+    white;
+
+  border:
+    1px solid #e5e5e5;
+
+  border-radius: 10px;
+
+  box-shadow:
+    0 8px 30px
+    rgba(0, 0, 0, 0.12);
+}
+
+
+/* Login title */
+
+.login-card h1 {
+  margin:
+    0 0 12px;
+
+  color:
+    #222;
+
+  font-size:
+    28px;
+
+  font-weight:
+    600;
+}
+
+
+/* Login description */
+
+.login-card p {
+  margin:
+    0 0 30px;
+
+  color:
+    #777;
+
+  font-size:
+    14px;
+
+  line-height:
+    1.5;
+}
+
+
+/* Google login button */
+
 #login-button {
-  padding: 14px 28px;
+  display:
+    inline-flex;
 
-  font-size: 18px;
+  align-items:
+    center;
 
-  cursor: pointer;
+  justify-content:
+    center;
+
+  gap:
+    10px;
+
+  padding:
+    12px 20px;
+
+  border:
+    1px solid #dadce0;
+
+  border-radius:
+    5px;
+
+  background:
+    white;
+
+  color:
+    #3c4043;
+
+  font-size:
+    16px;
+
+  cursor:
+    pointer;
+
+  box-shadow:
+    0 2px 5px
+    rgba(0, 0, 0, 0.12);
+
+  transition:
+    background 0.2s,
+    box-shadow 0.2s;
+}
+
+#login-button:hover {
+  background:
+    #f8f9fa;
+
+  box-shadow:
+    0 3px 8px
+    rgba(0, 0, 0, 0.16);
+}
+
+
+/* Google logo */
+
+#login-button img {
+  width:
+    20px;
+
+  height:
+    20px;
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 600px) {
+
+  .login-card {
+    width:
+      calc(100% - 40px);
+
+    padding:
+      35px 25px;
+  }
+
+  .login-card h1 {
+    font-size:
+      24px;
+  }
+
+  #menu button {
+    padding:
+      10px 14px;
+
+    font-size:
+      13px;
+  }
 }

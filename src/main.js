@@ -68,7 +68,7 @@ function init() {
     10000
   )
 
-  camera.position.z = 1800
+  camera.position.z = 3800
 
   createCards()
 
@@ -78,6 +78,7 @@ function init() {
   createGridTargets()
 
   createMenu()
+  createLegend()
 
   renderer = new CSS3DRenderer()
 
@@ -179,10 +180,10 @@ function createTableTargets() {
       Math.floor(index / 20)
 
     target.position.x =
-      (column - 9.5) * 260
+      (column - 9.5) * 155
 
     target.position.y =
-      -(row - 4.5) * 330
+      -(row - 4.5) * 205
 
     target.position.z = 0
 
@@ -449,7 +450,7 @@ function transform(targets, duration) {
 
 function getNetWorthClass(netWorth) {
 
-  if (netWorth > 200000) {
+  if (netWorth >= 200000) {
     return 'wealth-green'
   }
 
@@ -593,8 +594,6 @@ function parseNetWorth(value) {
   )
 }
 
-
-
 window.addEventListener(
   'load',
   () => {
@@ -623,3 +622,22 @@ window.addEventListener(
       )
   }
 )
+
+
+function createLegend() {
+
+  const legend =
+    document.createElement('div')
+
+  legend.id = 'wealth-legend'
+
+  legend.innerHTML = `
+    <span>LOW</span>
+
+    <div class="legend-bar"></div>
+
+    <span>HIGH</span>
+  `
+
+  document.body.appendChild(legend)
+}
