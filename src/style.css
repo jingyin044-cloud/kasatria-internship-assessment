@@ -341,3 +341,8 @@ body {
       #34c759
     );
 }
+
+#login-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}

@@ -24,6 +24,7 @@ const tableTargets = []
 const sphereTargets = []
 const helixTargets = []
 const gridTargets = []
+const pyramidTargets = []
 
 
 const CLIENT_ID = '515866714168-p57gf1oqq8d5t5pkcil4pj6k15hkver6.apps.googleusercontent.com'
@@ -41,6 +42,22 @@ let gapiReady = false
 let gisReady = false
 let people = []
 
+function updateLoginButtonState() {
+  const button =
+    document.getElementById('login-button')
+
+  if (!button) return
+
+  const ready =
+    gapiReady && gisReady
+
+  button.disabled = !ready
+
+  button.textContent =
+    ready
+      ? 'Sign in with Google'
+      : 'Loading Google...'
+}
 
 function startVisualization() {
 
@@ -76,6 +93,7 @@ function init() {
   createSphereTargets()
   createHelixTargets()
   createGridTargets()
+  createPyramidTargets()
 
   createMenu()
   createLegend()
@@ -305,7 +323,164 @@ function createGridTargets() {
   })
 }
 
+function createPyramidTargets() {
 
+  const vertices = [
+    new THREE.Vector3(0, 1200, 0),
+    new THREE.Vector3(-1200, -800, 900),
+    new THREE.Vector3(1200, -800, 900),
+    new THREE.Vector3(0, -800, -1300)
+  ]
+
+  const faces = [
+    [0, 1, 2],
+    [0, 2, 3],
+    [0, 3, 1],
+    [1, 3, 2]
+  ]
+
+  const cardsPerFace =
+    Math.ceil(objects.length / 4)
+
+  objects.forEach((object, index) => {
+
+    const faceIndex =
+      Math.min(
+        Math.floor(index / cardsPerFace),
+        3
+      )
+
+    const localIndex =
+      index % cardsPerFace
+
+    const [
+      aIndex,
+      bIndex,
+      cIndex
+    ] = faces[faceIndex]
+
+    const a = vertices[aIndex]
+    const b = vertices[bIndex]
+    const c = vertices[cIndex]
+
+    const target =
+      new THREE.Object3D()
+
+    // Number of rows needed on each triangular face
+    const rows =
+      Math.ceil(
+        (Math.sqrt(
+          8 * cardsPerFace + 1
+        ) - 1) / 2
+      )
+
+    let remaining =
+      localIndex
+
+    let row = 0
+
+    while (
+      remaining >= row + 1
+    ) {
+      remaining -= row + 1
+      row++
+    }
+
+    const col =
+      remaining
+
+    const v =
+      rows <= 1
+        ? 0
+        : row / (rows - 1)
+
+    const u =
+      row === 0
+        ? 0.5
+        : col / row
+
+    // Interpolate from top vertex toward the base edge
+    const left =
+      new THREE.Vector3()
+        .lerpVectors(
+          a,
+          b,
+          v
+        )
+
+    const right =
+      new THREE.Vector3()
+        .lerpVectors(
+          a,
+          c,
+          v
+        )
+
+    target.position
+      .lerpVectors(
+        left,
+        right,
+        u
+      )
+
+    // Make each card face outward from the tetrahedron
+    const faceCenter =
+      new THREE.Vector3()
+        .add(a)
+        .add(b)
+        .add(c)
+        .divideScalar(3)
+
+    const faceNormal =
+      new THREE.Vector3()
+        .subVectors(
+          b,
+          a
+        )
+        .cross(
+          new THREE.Vector3()
+            .subVectors(
+              c,
+              a
+            )
+        )
+        .normalize()
+
+    const tetraCenter =
+      new THREE.Vector3()
+        .add(vertices[0])
+        .add(vertices[1])
+        .add(vertices[2])
+        .add(vertices[3])
+        .divideScalar(4)
+
+    const towardOutside =
+      faceCenter
+        .clone()
+        .sub(tetraCenter)
+
+    if (
+      faceNormal.dot(
+        towardOutside
+      ) < 0
+    ) {
+      faceNormal.negate()
+    }
+
+    const lookTarget =
+      target.position
+        .clone()
+        .add(faceNormal)
+
+    target.lookAt(
+      lookTarget
+    )
+
+    pyramidTargets.push(
+      target
+    )
+  })
+}
 
 function createMenu() {
 
@@ -378,6 +553,22 @@ function createMenu() {
     }
   )
 
+  // PYRAMID BUTTON
+  const pyramidButton =
+    document.createElement('button')
+
+  pyramidButton.textContent = 'PYRAMID'
+
+  pyramidButton.addEventListener(
+    'click',
+    () => {
+      transform(
+        pyramidTargets,
+        2000
+      )
+    }
+  )
+
   menu.appendChild(
     tableButton
   )
@@ -392,6 +583,10 @@ function createMenu() {
 
   menu.appendChild(
     gridButton
+  )
+
+  menu.appendChild(
+    pyramidButton
   )
 
   document.body.appendChild(
@@ -503,6 +698,7 @@ async function initializeGapiClient() {
   })
 
   gapiReady = true
+  updateLoginButtonState()
 }
 
 function gisLoaded() {
@@ -521,6 +717,7 @@ function gisLoaded() {
     })
 
   gisReady = true
+  updateLoginButtonState()
 }
 
 async function loadSheetData() {
@@ -598,6 +795,7 @@ window.addEventListener(
   'load',
   () => {
 
+    updateLoginButtonState()
     gapiLoaded()
     gisLoaded()
 
